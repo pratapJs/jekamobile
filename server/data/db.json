@@ -1,0 +1,119 @@
+{
+  "users": [],
+  "products": [
+    {
+      "id": "1765930510876",
+      "name": "iPhone 15 Pro",
+      "brand": "Apple",
+      "price": 999,
+      "category": "Mobile",
+      "image": "https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&q=80&w=800",
+      "description": "The ultimate iPhone with Titanium design.",
+      "specs": {
+        "screen": "6.1 inch",
+        "chip": "A17 Pro",
+        "storage": "128GB"
+      },
+      "createdAt": "2025-12-17T00:15:10.876Z"
+    },
+    {
+      "id": "1765930510877",
+      "name": "Samsung Galaxy S24 Ultra",
+      "brand": "Samsung",
+      "price": 1199,
+      "category": "Mobile",
+      "image": "https://images.unsplash.com/photo-1706606991536-e3538b2b7372?auto=format&fit=crop&q=80&w=800",
+      "description": "Galaxy AI is here.",
+      "specs": {
+        "screen": "6.8 inch",
+        "chip": "Snapdragon 8 Gen 3",
+        "storage": "256GB"
+      },
+      "createdAt": "2025-12-17T00:15:10.877Z"
+    },
+    {
+      "id": "1765930510878",
+      "name": "AirPods Pro 2",
+      "brand": "Apple",
+      "price": 249,
+      "category": "Accessories",
+      "image": "https://images.unsplash.com/photo-1604054923518-e499a1a695a9?auto=format&fit=crop&q=80&w=800",
+      "description": "Rich sound. Intelligent noise cancellation.",
+      "specs": {
+        "type": "Headphones"
+      },
+      "createdAt": "2025-12-17T00:15:10.878Z"
+    },
+    {
+      "id": "1765937510325",
+      "name": "iPhone17",
+      "brand": "apple",
+      "price": "2000",
+      "category": "Mobile",
+      "description": "in various color and storage capacity",
+      "specs": {},
+      "image": "http://localhost:5000/uploads/1765937510322.avif",
+      "createdAt": "2025-12-17T02:11:50.325Z"
+    }
+  ],
+  "orders": [],
+  "services": [
+    {
+      "id": "1765930510881",
+      "title": "Screen Replacement",
+      "price": "$49+",
+      "description": "Cracked screen replacement",
+      "createdAt": "2025-12-17T00:15:10.881Z"
+    },
+    {
+      "id": "1765930510883",
+      "title": "Battery Replacement",
+      "price": "$29+",
+      "description": "New battery installation",
+      "createdAt": "2025-12-17T00:15:10.883Z"
+    },
+    {
+      "id": "1765930510885",
+      "title": "Software Issues",
+      "price": "$19+",
+      "description": "OS reinstallation and updates",
+      "createdAt": "2025-12-17T00:15:10.885Z"
+    }
+  ],
+  "faqs": [
+    {
+      "id": "1765930510879",
+      "q": "What is your warranty policy?",
+      "a": "We offer a 1-year official warranty on all devices.",
+      "createdAt": "2025-12-17T00:15:10.879Z"
+    },
+    {
+      "id": "1765930510880",
+      "q": "How long do repairs take?",
+      "a": "Most repairs are done within 1-2 hours.",
+      "createdAt": "2025-12-17T00:15:10.880Z"
+    },
+    {
+      "id": "1765931222164",
+      "q": "What is your exchange policy?",
+      "a": "We offer exchange within 1 month of the sale.",
+      "createdAt": "2025-12-17T00:27:02.164Z"
+    },
+    {
+      "id": "1765931279885",
+      "q": "What is your repair warranty policy?",
+      "a": "We offer free repair if the same issue re-occur within 3 months of the service.",
+      "createdAt": "2025-12-17T00:27:59.885Z"
+    }
+  ],
+  "contact": [
+    {
+      "id": "1765930510886",
+      "address": "JEKA MOBILE AND REPAIR SHOP, SYDNEY, AUSTRALIA",
+      "phone": "+6499999999",
+      "email": "support@Jekamobileshop.com",
+      "createdAt": "2025-12-17T00:15:10.886Z",
+      "updatedAt": "2025-12-17T02:10:50.805Z"
+    }
+  ]
+}
