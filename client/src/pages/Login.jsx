@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Lock, User } from 'lucide-react';
 
+import axios from 'axios';
+
 const Login = () => {
     const [credentials, setCredentials] = useState({ username: '', password: '' });
     const navigate = useNavigate();
@@ -10,14 +12,16 @@ const Login = () => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Mock Login Logic
-        if (credentials.username === 'admin' && credentials.password === 'admin') {
-            localStorage.setItem('isAdmin', 'true');
-            navigate('/admin');
-        } else {
-            alert('Invalid Credentials (Try admin/admin)');
+        try {
+            const res = await axios.post('/api/login', credentials);
+            if (res.data.success) {
+                localStorage.setItem('isAdmin', 'true');
+                navigate('/admin');
+            }
+        } catch (err) {
+            alert('Invalid Credentials');
         }
     };
 
@@ -25,7 +29,7 @@ const Login = () => {
         <div className="min-h-screen bg-slate-50 flex items-center justify-center px-6">
             <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-slate-100">
                 <div className="text-center mb-8">
-                    <h1 className="text-3xl font-bold text-slate-900">Welcome Back</h1>
+                    <h1 className="text-3xl font-bold text-slate-900">Welcome</h1>
                     <p className="text-slate-500 mt-2">Sign in to manage your store</p>
                 </div>
 
@@ -64,7 +68,7 @@ const Login = () => {
                 </form>
 
                 <div className="mt-6 text-center text-sm text-slate-500">
-                    <p>Demo credentials: admin / admin</p>
+
                 </div>
             </div>
         </div>

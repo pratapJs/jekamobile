@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Clock } from 'lucide-react';
+import { formatOpeningHours } from '../utils/formatters';
 
 const Contact = () => {
     const [contact, setContact] = useState({
@@ -28,31 +29,60 @@ const Contact = () => {
                         <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
                             <h2 className="text-xl font-bold mb-6">Get in Touch</h2>
                             <div className="space-y-6">
-                                <div className="flex items-start gap-4">
-                                    <div className="bg-blue-50 p-3 rounded-full text-primary">
+                                {/* Visit Us */}
+                                <a
+                                    href="https://www.google.com/maps/search/?api=1&query=JEKA+MOBILE+AND+REPAIR+SHOP+SYDNEY"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-start gap-4 group cursor-pointer"
+                                >
+                                    <div className="bg-blue-50 p-3 rounded-full text-primary group-hover:bg-blue-100 transition-colors">
                                         <MapPin size={24} />
                                     </div>
                                     <div>
-                                        <h3 className="font-semibold text-slate-900">Visit Us</h3>
+                                        <h3 className="font-semibold text-slate-900 group-hover:text-primary transition-colors">Visit Us</h3>
                                         <p className="text-slate-500">{contact.address}</p>
                                     </div>
-                                </div>
-                                <div className="flex items-start gap-4">
-                                    <div className="bg-blue-50 p-3 rounded-full text-primary">
+                                </a>
+
+                                {/* Call Us */}
+                                <a
+                                    href={`tel:${contact.phone}`}
+                                    className="flex items-start gap-4 group cursor-pointer"
+                                >
+                                    <div className="bg-blue-50 p-3 rounded-full text-primary group-hover:bg-blue-100 transition-colors">
                                         <Phone size={24} />
                                     </div>
                                     <div>
-                                        <h3 className="font-semibold text-slate-900">Call Us</h3>
+                                        <h3 className="font-semibold text-slate-900 group-hover:text-primary transition-colors">Call Us</h3>
                                         <p className="text-slate-500">{contact.phone}</p>
                                     </div>
-                                </div>
-                                <div className="flex items-start gap-4">
-                                    <div className="bg-blue-50 p-3 rounded-full text-primary">
+                                </a>
+
+                                {/* Email Us */}
+                                <a
+                                    href={`mailto:${contact.email}`}
+                                    className="flex items-start gap-4 group cursor-pointer"
+                                >
+                                    <div className="bg-blue-50 p-3 rounded-full text-primary group-hover:bg-blue-100 transition-colors">
                                         <Mail size={24} />
                                     </div>
                                     <div>
-                                        <h3 className="font-semibold text-slate-900">Email Us</h3>
+                                        <h3 className="font-semibold text-slate-900 group-hover:text-primary transition-colors">Email Us</h3>
                                         <p className="text-slate-500">{contact.email}</p>
+                                    </div>
+                                </a>
+
+                                {/* Opening Hours */}
+                                <div className="flex items-start gap-4">
+                                    <div className="bg-blue-50 p-3 rounded-full text-primary">
+                                        <Clock size={24} />
+                                    </div>
+                                    <div>
+                                        <h3 className="font-semibold text-slate-900">Opening Hours</h3>
+                                        <div className="text-slate-500 text-sm space-y-1 mt-1">
+                                            {formatOpeningHours(contact.openingHours)}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -131,7 +161,7 @@ const ContactForm = () => {
             <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-primary text-white py-3 rounded-lg font-bold hover:bg-blue-600 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                className="w-full bg-[#b88746] hover:bg-[#a1753a] text-white py-3 rounded-lg font-bold flex items-center justify-center gap-2 disabled:opacity-50 transition-colors shadow-sm"
             >
                 <Send size={18} /> {loading ? 'Sending...' : 'Send Message'}
             </button>

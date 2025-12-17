@@ -12,18 +12,36 @@ import { Product } from './models/Product.js';
 import { FAQ } from './models/FAQ.js';
 import { Service } from './models/Service.js';
 import { Contact } from './models/Contact.js';
+import { Admin } from './models/Admin.js';
+import { Appointment } from './models/Appointment.js';
 
 
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+import axios from 'axios';
+
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI)
-    .then(() => console.log('MongoDB Connected'))
-    .catch(err => console.error(err));
+    .then(async () => {
+        console.log('MongoDB Connected');
+        // Auto-seed admin if none exists
+        try {
+            const adminCount = await Admin.countDocuments();
+            if (adminCount === 0) {
+                await new Admin({ username: 'admin', password: 'admin' }).save();
+                console.log('Default admin created');
+            }
+        } catch (err) {
+            console.error('Auto-seed error:', err);
+        }
+    })
+    .catch(err => {
+        console.error('MongoDB Connection Error:', err);
+    });
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -32,10 +50,11 @@ app.use(cors());
 app.use(express.json());
 
 // Ensure uploads directory exists
-const uploadDir = path.join(__dirname, 'uploads');
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir);
-}
+// Ensure uploads directory exists - Disabled for GAE Read-Only FS
+// const uploadDir = path.join(__dirname, 'uploads');
+// if (!fs.existsSync(uploadDir)) {
+//     fs.mkdirSync(uploadDir);
+// }
 
 // Multer Config
 const storage = multer.diskStorage({
@@ -53,9 +72,10 @@ const upload = multer({ storage });
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Basic Route
-app.get('/', (req, res) => {
-    res.send('Mobile Shop API is running');
-});
+// Basic Route removed to allow React Client to load
+// app.get('/', (req, res) => {
+//    res.send('Mobile Shop API is running');
+// });
 
 // Product Routes
 app.get('/api/products', async (req, res) => {
@@ -186,7 +206,11 @@ app.get('/api/contact', async (req, res) => {
 import nodemailer from 'nodemailer';
 
 app.post('/api/contact/message', async (req, res) => {
-    const { name, email, message } = req.body;
+    const { name, email, phone, message } = req.body;
+
+    if (!email && !phone) {
+        return res.status(400).json({ message: 'Please provide either an Email or Phone Number.' });
+    }
 
     // Create transporter
     const transporter = nodemailer.createTransport({
@@ -197,20 +221,80 @@ app.post('/api/contact/message', async (req, res) => {
         }
     });
 
+    const contactInfo = [];
+    if (email) contactInfo.push(`Email: ${email}`);
+    if (phone) contactInfo.push(`Phone: ${phone}`);
+
     const mailOptions = {
-        from: email,
-        to: process.env.EMAIL_USER, // Send TO the shop email
+        from: email || process.env.EMAIL_USER, // Use shop email if no user email
+        to: process.env.EMAIL_USER,
         subject: `New Message from ${name} - Mobile Shop`,
-        text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
-        replyTo: email
+        text: `Name: ${name}\n${contactInfo.join('\n')}\n\nMessage:\n${message}`,
+        replyTo: email || undefined
     };
 
     try {
         await transporter.sendMail(mailOptions);
-        res.json({ message: 'Email sent successfully' });
+
+        // Also save to database
+        const newAppointment = new Appointment({
+            name,
+            email,
+            phone,
+            deviceModel: "Enquiry", // Default or extract if passed
+            description: message
+        });
+        // Try to parse message for model if standard format
+        if (message.startsWith("Device Model:")) {
+            const lines = message.split('\n');
+            const modelLine = lines.find(l => l.startsWith("Device Model:"));
+            if (modelLine) newAppointment.deviceModel = modelLine.replace("Device Model:", "").trim();
+        }
+
+        console.log('Attempting to save Appointment at /api/contact/message');
+        console.log('Appointment Model Name:', Appointment.modelName);
+        console.log('New Appointment Data:', newAppointment);
+
+        await newAppointment.save();
+        console.log('Appointment saved successfully');
+
+        res.json({ message: 'Email sent and appointment saved' });
     } catch (error) {
-        console.error('Email error:', error);
-        res.status(500).json({ message: 'Failed to send email' });
+        console.error('Email/DB error details:', error);
+        console.error('Error Stack:', error.stack);
+        // Even if email fails, try to save to DB? For now fail both to be safe
+        res.status(500).json({ message: 'Failed to process request', error: error.toString() });
+    }
+});
+
+// Appointment Routes
+app.get('/api/appointments', async (req, res) => {
+    try {
+        const appointments = await Appointment.find().sort({ date: -1 });
+        res.json(appointments);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+app.patch('/api/appointments/:id', async (req, res) => {
+    try {
+        const { status } = req.body;
+        const updated = await Appointment.findByIdAndUpdate(req.params.id, { status }, { new: true });
+        res.json(updated);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+app.get('/api/stats', async (req, res) => {
+    try {
+        const products = await Product.countDocuments();
+        const services = await Service.countDocuments();
+        const appointments = await Appointment.countDocuments({ status: 'Pending' });
+        res.json({ products, services, appointments });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
 });
 
@@ -227,24 +311,131 @@ app.post('/api/contact', async (req, res) => {
 
 // Services Routes
 app.get('/api/services', async (req, res) => {
-    const services = await Service.find();
-    res.json(services.map(s => ({ ...s.toObject(), id: s._id })));
+    try {
+        const services = await Service.find();
+        res.json(services.map(s => ({ ...s.toObject(), id: s._id })));
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
 });
 
 app.post('/api/services', async (req, res) => {
-    const newService = new Service(req.body);
-    await newService.save();
-    res.json({ ...newService.toObject(), id: newService._id });
+    try {
+        const newService = new Service(req.body);
+        await newService.save();
+        res.json({ ...newService.toObject(), id: newService._id });
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
 });
 
 app.put('/api/services/:id', async (req, res) => {
-    const updated = await Service.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    res.json({ ...updated.toObject(), id: updated._id });
+    try {
+        const updated = await Service.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.json({ ...updated.toObject(), id: updated._id });
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
 });
 
 app.delete('/api/services/:id', async (req, res) => {
-    await Service.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Deleted successfully' });
+    try {
+        await Service.findByIdAndDelete(req.params.id);
+        res.json({ message: 'Deleted successfully' });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+
+
+
+// Reviews Route (Proxy to Google Places API)
+let reviewsCache = {
+    data: null,
+    timestamp: 0
+};
+
+app.get('/api/reviews', async (req, res) => {
+    // Check cache (1 hour)
+    const CACHE_DURATION = 60 * 60 * 1000;
+    if (reviewsCache.data && (Date.now() - reviewsCache.timestamp < CACHE_DURATION)) {
+        return res.json(reviewsCache.data);
+    }
+
+    const API_KEY = process.env.GOOGLE_PLACES_API_KEY;
+    const PLACE_ID = process.env.GOOGLE_PLACE_ID;
+
+    if (!API_KEY || !PLACE_ID) {
+        return res.status(500).json({ message: 'Server missing Google API credentials' });
+    }
+
+    try {
+        const response = await axios.get(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${PLACE_ID}&fields=name,rating,reviews,user_ratings_total&key=${API_KEY}`);
+
+        if (response.data.status === 'OK') {
+            const result = response.data.result;
+            const data = {
+                rating: result.rating,
+                total: result.user_ratings_total,
+                reviews: result.reviews.map(r => ({
+                    id: r.time, // Use timestamp as ID
+                    name: r.author_name,
+                    rating: r.rating,
+                    date: r.relative_time_description,
+                    text: r.text,
+                    initial: r.author_name.charAt(0),
+                    source: 'google',
+                    photo: r.profile_photo_url
+                }))
+            };
+
+            // Update cache
+            reviewsCache = {
+                data: data,
+                timestamp: Date.now()
+            };
+
+            res.json(data);
+        } else {
+            console.error('Google API Error:', response.data);
+            res.status(500).json({ message: 'Failed to fetch from Google' });
+        }
+    } catch (err) {
+        console.error('Reviews Fetch Error:', err.message);
+        res.status(500).json({ message: err.message });
+    }
+});
+
+// Auth Route
+app.post('/api/login', async (req, res) => {
+    const { username, password } = req.body;
+    try {
+        const admin = await Admin.findOne({ username });
+        if (admin && admin.password === password) {
+            res.json({ success: true, token: 'demo-token-123' });
+        } else {
+            res.status(401).json({ message: 'Invalid credentials' });
+        }
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+app.put('/api/admin/profile', async (req, res) => {
+    const { username, password, newPassword } = req.body;
+    try {
+        const admin = await Admin.findOne({ username });
+        if (!admin || admin.password !== password) {
+            return res.status(401).json({ message: 'Invalid current credentials' });
+        }
+
+        admin.password = newPassword;
+        await admin.save();
+        res.json({ message: 'Profile updated successfully' });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
 });
 
 // Seed Route (Temporary for Dev)
@@ -302,6 +493,13 @@ app.post('/api/seed', async (req, res) => {
     await FAQ.deleteMany({});
     await Service.deleteMany({});
     await Contact.deleteMany({});
+    await Admin.deleteMany({});
+
+    // Create default admin if not exists
+    const adminExists = await Admin.findOne();
+    if (!adminExists) {
+        await new Admin({ username: 'admin', password: 'admin' }).save();
+    }
 
     await Product.insertMany(products);
     await FAQ.insertMany(faqs);
@@ -312,7 +510,7 @@ app.post('/api/seed', async (req, res) => {
 });
 
 // Serve React App in Production
-const clientDist = path.join(__dirname, '../client/dist');
+const clientDist = path.join(__dirname, 'dist');
 if (fs.existsSync(clientDist)) {
     app.use(express.static(clientDist));
     app.get('*', (req, res) => {

@@ -16,12 +16,12 @@ const Hero = () => {
             highlight: "MOBILE REPAIRS",
             subtitle: "Fast, reliable, and professional repairs for all your mobile devices. Screen replacements in under 30 minutes.",
             ctaText: "Book a Repair",
-            ctaLink: "/services",
+            ctaLink: "#book-appointment", // Updated to ID
             colorData: "from-blue-400 to-emerald-400"
         },
         {
             id: 2,
-            image: "/hero-new.jpg", // Reusing image for demo, can be changed later
+            image: "/accessories-hero.jpg",
             title: "PREMIUM",
             highlight: "ACCESSORIES",
             subtitle: "Protect and enhance your device with our curated collection of high-quality cases, chargers, and more.",
@@ -31,7 +31,7 @@ const Hero = () => {
         },
         {
             id: 3,
-            image: "/hero-new.jpg",
+            image: "/mobile-hero.jpg",
             title: "LATEST",
             highlight: "SMARTPHONES",
             subtitle: "Discover the latest flagship devices from top brands like Apple and Samsung at competitive prices.",
@@ -47,6 +47,16 @@ const Hero = () => {
         }, 5000);
         return () => clearInterval(timer);
     }, []);
+
+    const handleScroll = (e, link) => {
+        if (link.startsWith('#')) {
+            e.preventDefault();
+            const element = document.querySelector(link);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    };
 
     return (
         <section className="relative bg-slate-900 overflow-hidden h-[600px]">
@@ -90,6 +100,7 @@ const Hero = () => {
                             <div className="flex flex-wrap gap-4">
                                 <MotionLink
                                     to={slides[currentSlide].ctaLink}
+                                    onClick={(e) => handleScroll(e, slides[currentSlide].ctaLink)}
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
                                     className={`px-8 py-4 bg-gradient-to-r ${slides[currentSlide].colorData} text-white rounded-full font-bold hover:shadow-lg transition-shadow flex items-center gap-2`}

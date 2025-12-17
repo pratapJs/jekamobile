@@ -7,11 +7,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#2563eb", // Royal Blue
-        secondary: "#1e293b", // Slate 800
-        accent: "#f59e0b", // Amber 500
+        primary: "#106EBE", // Clean Blue (Secondary 30% - Headers/Text)
+        secondary: "#1e293b", // Slate 800 (Keep for neutral dark text)
+        accent: "#FF6534", // Bright Orange (Accent 10% - CTAs)
         dark: "#0f172a", // Slate 900
-        light: "#f8fafc", // Slate 50
+        light: "#F6F6F6", // Light Gray (Dominant 60% - Backgrounds)
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],

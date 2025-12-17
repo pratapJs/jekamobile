@@ -12,12 +12,15 @@ import FAQ from './pages/FAQ';
 import ProductDetails from './pages/ProductDetails';
 import Login from './pages/Login';
 import AdminDashboard from './pages/AdminDashboard';
+import AdminRoute from './components/AdminRoute';
+import AccessibilityWidget from './components/AccessibilityWidget';
 
-function App() {
+const App = () => {
   return (
     <Router>
       <ScrollToTop />
-      <div className="min-h-screen flex flex-col bg-white font-sans text-slate-800">
+      <AccessibilityWidget />
+      <div className="flex flex-col min-h-screen bg-light font-sans text-slate-800">
         <Navbar />
         <main className="flex-grow">
           <Routes>
@@ -27,8 +30,14 @@ function App() {
             <Route path="/services" element={<Services />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/faq" element={<FAQ />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/admin" element={<AdminDashboard />} />
+
+
+            <Route path="/admin-portal" element={<Login />} />
+            <Route path="/admin" element={
+              <AdminRoute>
+                <AdminDashboard />
+              </AdminRoute>
+            } />
           </Routes>
         </main>
         <Footer />
