@@ -13,10 +13,12 @@ import { FAQ } from './models/FAQ.js';
 import { Service } from './models/Service.js';
 import { Contact } from './models/Contact.js';
 
-dotenv.config();
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI)
