@@ -55,7 +55,7 @@ const Navbar = () => {
                     <div className="flex items-center gap-6">
                         <div className="flex items-center gap-2">
                             <Phone size={14} className="text-[#b88746]" />
-                            <span>099999999</span>
+                            <span>0410186566</span>
                         </div>
                         <div className="flex items-center gap-2">
                             <Mail size={14} className="text-[#b88746]" />
