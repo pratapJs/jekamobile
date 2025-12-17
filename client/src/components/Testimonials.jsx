@@ -93,7 +93,7 @@ const Testimonials = () => {
                     <p className="text-slate-500 max-w-2xl mx-auto text-lg mb-8">Don't just take our word for it. Read reviews from our satisfied customers.</p>
 
                     <a
-                        href="https://www.google.com/search?q=JEKA+MOBILE+AND+REPAIR+SHOP+SYDNEY+reviews"
+                        href="https://share.google/VnNX6fa4hc8WteYWC"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 px-6 py-3 bg-[#b88746] text-white rounded-full font-bold shadow-md hover:bg-[#a1753a] hover:shadow-lg transition-all group"

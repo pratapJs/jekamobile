@@ -12,8 +12,7 @@ const Footer = () => {
         address: 'Loading...',
         phone: 'Loading...',
         email: 'Loading...',
-        phone: 'Loading...',
-        email: 'Loading...',
+
         openingHours: []
     });
 

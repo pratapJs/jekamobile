@@ -77,6 +77,8 @@ const ContactManager = () => {
                         <label className="block text-sm font-medium text-slate-700 mb-1">Address</label>
                         <input
                             type="text"
+                            name="address"
+                            id="admin-address"
                             value={formData.address}
                             onChange={e => setFormData({ ...formData, address: e.target.value })}
                             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20 outline-none"
@@ -86,6 +88,8 @@ const ContactManager = () => {
                         <label className="block text-sm font-medium text-slate-700 mb-1">Phone</label>
                         <input
                             type="text"
+                            name="phone"
+                            id="admin-phone"
                             value={formData.phone}
                             onChange={e => setFormData({ ...formData, phone: e.target.value })}
                             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20 outline-none"
@@ -95,6 +99,8 @@ const ContactManager = () => {
                         <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
                         <input
                             type="email"
+                            name="email"
+                            id="admin-email"
                             value={formData.email}
                             onChange={e => setFormData({ ...formData, email: e.target.value })}
                             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20 outline-none"
@@ -113,6 +119,7 @@ const ContactManager = () => {
                                 <label className="flex items-center gap-2 cursor-pointer min-w-[100px]">
                                     <input
                                         type="checkbox"
+                                        id={`day-${index}-toggle`}
                                         checked={day.isOpen}
                                         onChange={e => handleDayChange(index, 'isOpen', e.target.checked)}
                                         className="w-4 h-4 text-primary rounded"
@@ -126,6 +133,7 @@ const ContactManager = () => {
                                     <div className="flex items-center gap-2 animate-in fade-in slide-in-from-left-4 duration-300">
                                         <input
                                             type="time"
+                                            id={`day-${index}-start`}
                                             value={day.start}
                                             onChange={e => handleDayChange(index, 'start', e.target.value)}
                                             className="px-2 py-1 border rounded text-sm focus:border-primary outline-none"
@@ -133,6 +141,7 @@ const ContactManager = () => {
                                         <span className="text-slate-400">-</span>
                                         <input
                                             type="time"
+                                            id={`day-${index}-end`}
                                             value={day.end}
                                             onChange={e => handleDayChange(index, 'end', e.target.value)}
                                             className="px-2 py-1 border rounded text-sm focus:border-primary outline-none"

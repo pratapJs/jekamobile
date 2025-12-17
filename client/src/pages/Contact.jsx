@@ -132,6 +132,8 @@ const ContactForm = () => {
                 <label className="block text-sm font-medium text-slate-700 mb-1">Name</label>
                 <input
                     type="text"
+                    name="name"
+                    id="contact-name"
                     value={formData.name}
                     onChange={e => setFormData({ ...formData, name: e.target.value })}
                     className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none"
@@ -142,6 +144,8 @@ const ContactForm = () => {
                 <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
                 <input
                     type="email"
+                    name="email"
+                    id="contact-email"
                     value={formData.email}
                     onChange={e => setFormData({ ...formData, email: e.target.value })}
                     className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none"
@@ -151,6 +155,8 @@ const ContactForm = () => {
             <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Message</label>
                 <textarea
+                    name="message"
+                    id="contact-message"
                     rows="4"
                     value={formData.message}
                     onChange={e => setFormData({ ...formData, message: e.target.value })}

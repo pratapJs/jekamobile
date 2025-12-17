@@ -57,6 +57,8 @@ const BookingForm = ({ serviceTitle, initialModel = '', className = '' }) => {
             <form onSubmit={handleSubmit} className="space-y-4">
                 <input
                     type="text"
+                    name="name"
+                    id="booking-name"
                     placeholder="Your Name"
                     className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:border-primary bg-slate-50"
                     value={formData.name}
@@ -69,6 +71,8 @@ const BookingForm = ({ serviceTitle, initialModel = '', className = '' }) => {
                     </div>
                     <input
                         type="email"
+                        name="email"
+                        id="booking-email"
                         placeholder="Email Address"
                         className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:border-primary bg-slate-50"
                         value={formData.email}
@@ -76,6 +80,8 @@ const BookingForm = ({ serviceTitle, initialModel = '', className = '' }) => {
                     />
                     <input
                         type="tel"
+                        name="phone"
+                        id="booking-phone"
                         placeholder="Phone Number"
                         className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:border-primary bg-slate-50"
                         value={formData.phone}
@@ -84,6 +90,8 @@ const BookingForm = ({ serviceTitle, initialModel = '', className = '' }) => {
                 </div>
                 <input
                     type="text"
+                    name="deviceModel"
+                    id="booking-model"
                     placeholder="Device Model"
                     className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:border-primary bg-slate-50"
                     value={formData.deviceModel}
@@ -91,6 +99,8 @@ const BookingForm = ({ serviceTitle, initialModel = '', className = '' }) => {
                     required
                 />
                 <textarea
+                    name="description"
+                    id="booking-description"
                     rows="3"
                     placeholder="Additional Details..."
                     className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:border-primary bg-slate-50"

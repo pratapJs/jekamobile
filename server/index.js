@@ -57,15 +57,8 @@ app.use(express.json());
 // }
 
 // Multer Config
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/');
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname));
-    }
-});
-
+// Multer Config (Memory Storage for GAE Compatibility)
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 // Serve Uploads Static
@@ -119,10 +112,14 @@ app.get('/api/products/:id', async (req, res) => {
 // Admin Routes
 app.post('/api/products', upload.single('image'), async (req, res) => {
     const productData = req.body;
+
     if (req.file) {
-        // Store relative path for production compatibility
-        productData.image = `/uploads/${req.file.filename}`;
+        // Convert buffer to base64 data URI
+        const b64 = Buffer.from(req.file.buffer).toString('base64');
+        let mime = req.file.mimetype;
+        productData.image = `data:${mime};base64,${b64}`;
     }
+
     // Handle specs parsing if sent as JSON string from frontend FormData
     if (typeof productData.specs === 'string') {
         try {
@@ -143,9 +140,14 @@ app.post('/api/products', upload.single('image'), async (req, res) => {
 
 app.put('/api/products/:id', upload.single('image'), async (req, res) => {
     const productData = req.body;
+
     if (req.file) {
-        productData.image = `/uploads/${req.file.filename}`;
+        // Convert buffer to base64 data URI
+        const b64 = Buffer.from(req.file.buffer).toString('base64');
+        let mime = req.file.mimetype;
+        productData.image = `data:${mime};base64,${b64}`;
     }
+
     // Handle specs parsing
     if (typeof productData.specs === 'string') {
         try {
@@ -512,10 +514,13 @@ app.post('/api/seed', async (req, res) => {
 // Serve React App in Production
 const clientDist = path.join(__dirname, 'dist');
 if (fs.existsSync(clientDist)) {
+    console.log('Serving static files from:', clientDist);
     app.use(express.static(clientDist));
     app.get('*', (req, res) => {
         res.sendFile(path.join(clientDist, 'index.html'));
     });
+} else {
+    console.error('Dist folder not found at:', clientDist);
 }
 
 app.listen(PORT, () => {

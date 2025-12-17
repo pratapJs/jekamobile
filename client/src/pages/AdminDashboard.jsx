@@ -13,6 +13,11 @@ const AdminDashboard = () => {
     const [activeTab, setActiveTab] = useState('products');
     const navigate = useNavigate();
 
+    const handleLogout = () => {
+        localStorage.removeItem('isAdmin');
+        navigate('/admin-portal');
+    };
+
     useEffect(() => {
         if (!localStorage.getItem('isAdmin')) navigate('/login');
     }, []);
@@ -33,6 +38,12 @@ const AdminDashboard = () => {
                     <h1 className="text-3xl font-bold text-slate-900 flex items-center gap-2">
                         <Package /> Admin Dashboard
                     </h1>
+                    <button
+                        onClick={handleLogout}
+                        className="px-4 py-2 bg-red-50 text-red-600 rounded-lg font-medium hover:bg-red-100 transition-colors"
+                    >
+                        Sign Out
+                    </button>
                 </div>
 
                 {/* Tabs */}
