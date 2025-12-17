@@ -7,8 +7,8 @@ env_variables:
   NODE_ENV: "production"
   # CRITICAL: You must provide a CLOUD MongoDB URI (e.g., MongoDB Atlas). 
   # Localhost (127.0.0.1) will NOT work on Google Cloud.
-  MONGODB_URI: "mongodb+srv://pratapadhikari37_db_user:z2vwqFzKNDO2FYVG@cluster0.joilie5.mongodb.net/?appName=Cluster0"
-  EMAIL_USER: "jekamobilerepair@gmail.com"
-  EMAIL_PASS: "qwcq yrvd rivk oqsb"
+  MONGODB_URI: "YOUR_MONGODB_URI_HERE"
+  EMAIL_USER: "your_email@gmail.com"
+  EMAIL_PASS: "your_app_password"
   # Set your desired admin password here
   ADMIN_PASSWORD: "admin"
