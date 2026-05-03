@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Smartphone, Battery, Droplets, Unlock, Cpu, Plug, Camera, Speaker, Shield, Clock, Award, DollarSign } from 'lucide-react';
+import { Smartphone, Tablet, Battery, Droplets, Unlock, Cpu, Plug, Camera, Speaker, Shield, Clock, Award, DollarSign } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 import BookingForm from '../components/BookingForm';
@@ -8,16 +8,17 @@ import BookingForm from '../components/BookingForm';
 const Services = () => {
     const [prices, setPrices] = useState({});
 
-    // Static definition of services with design assets
+    // Static definition of services with design assets — mobile & tablet focus (no motherboard)
     const serviceList = [
-        { id: 'screen', title: "Phone screen replacement", icon: <Smartphone size={32} />, desc: "Cracked screen? We replace it with premium quality parts.", color: "bg-blue-50 text-blue-600" },
-        { id: 'battery', title: "Battery replacement", icon: <Battery size={32} />, desc: "Restore your device's power with a brand new battery.", color: "bg-green-50 text-green-600" },
-        { id: 'water', title: "Water Damage repair", icon: <Droplets size={32} />, desc: "Expert cleaning and diagnostic for liquid damaged devices.", color: "bg-cyan-50 text-cyan-600" },
-        { id: 'unlock', title: "Unlock phone", icon: <Unlock size={32} />, desc: "Freedom to use any carrier. Safe and permanent unlocking.", color: "bg-purple-50 text-purple-600" },
-        { id: 'software', title: "Software repair", icon: <Cpu size={32} />, desc: "Fix boot loops, crashes, and software glitches.", color: "bg-indigo-50 text-indigo-600" },
-        { id: 'charging', title: "Charging port repair", icon: <Plug size={32} />, desc: "Device not charging? We fix loose or broken ports.", color: "bg-orange-50 text-orange-600" },
-        { id: 'camera', title: "Camera repair", icon: <Camera size={32} />, desc: "Blurry photos? Focus issues? We restore your camera clarity.", color: "bg-pink-50 text-pink-600" },
-        { id: 'speaker', title: "Speaker repair", icon: <Speaker size={32} />, desc: "Fix low volume, crackling sounds, or no audio issues.", color: "bg-teal-50 text-teal-600" }
+        { id: 'screen', title: "Phone screen replacement", icon: <Smartphone size={32} />, desc: "Cracked screen? We replace it with premium quality parts for iPhone, Samsung, Oppo & more.", color: "bg-blue-50 text-blue-600" },
+        { id: 'tablet', title: "Tablet screen repair", icon: <Tablet size={32} />, desc: "iPad, Samsung Tab or any Android tablet — we fix screens, digitizers and back glass.", color: "bg-indigo-50 text-indigo-600" },
+        { id: 'battery', title: "Battery replacement", icon: <Battery size={32} />, desc: "Restore your device's power with a brand new battery. Same-day service available.", color: "bg-green-50 text-green-600" },
+        { id: 'water', title: "Water Damage repair", icon: <Droplets size={32} />, desc: "Expert cleaning and diagnostic for liquid damaged phones and tablets.", color: "bg-cyan-50 text-cyan-600" },
+        { id: 'unlock', title: "Unlock phone", icon: <Unlock size={32} />, desc: "Freedom to use any carrier. Safe and permanent unlocking for all brands.", color: "bg-purple-50 text-purple-600" },
+        { id: 'software', title: "Software repair", icon: <Cpu size={32} />, desc: "Fix boot loops, crashes, and software glitches on phones and tablets.", color: "bg-orange-50 text-orange-600" },
+        { id: 'charging', title: "Charging port repair", icon: <Plug size={32} />, desc: "Device not charging? We fix loose or broken ports quickly.", color: "bg-amber-50 text-amber-600" },
+        { id: 'camera', title: "Camera repair", icon: <Camera size={32} />, desc: "Blurry photos or broken lens? We restore your camera to full clarity.", color: "bg-pink-50 text-pink-600" },
+        { id: 'speaker', title: "Speaker & mic repair", icon: <Speaker size={32} />, desc: "Fix low volume, crackling sound, or no audio on phones and tablets.", color: "bg-teal-50 text-teal-600" },
     ];
 
     useEffect(() => {
@@ -28,7 +29,6 @@ const Services = () => {
     const fetchPrices = async () => {
         try {
             const res = await axios.get('/api/services');
-            // Map title -> price for easy lookup
             const priceMap = {};
             res.data.forEach(s => {
                 priceMap[s.title] = s.price;
@@ -40,24 +40,24 @@ const Services = () => {
     };
 
     const benefits = [
-        { icon: <Award size={32} />, title: "10 Years Experience", desc: "Expert technicians you can trust." },
+        { icon: <Award size={32} />, title: "Expert Technicians", desc: "Skilled, experienced repair specialists." },
         { icon: <Shield size={32} />, title: "3 Months Warranty", desc: "Peace of mind on every repair." },
-        { icon: <Clock size={32} />, title: "Fast Service", desc: "Most repairs done in 30 minutes." },
-        { icon: <DollarSign size={32} />, title: "Competitive Prices", desc: "Best value for premium service." }
+        { icon: <Clock size={32} />, title: "Mon–Sat 7am–7pm", desc: "Sun by appointment. Home pickup & delivery available." },
+        { icon: <DollarSign size={32} />, title: "Competitive Prices", desc: "Best value for premium service." },
     ];
 
     return (
         <div>
             {/* Hero Section */}
             <div className="bg-slate-900 text-white pt-32 pb-20 relative overflow-hidden">
-                <div className="absolute inset-0 bg-blue-600/10"></div>
+                <div className="absolute inset-0 bg-[#b88746]/10"></div>
                 <div className="container mx-auto px-6 relative z-10 text-center">
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         className="text-4xl md:text-6xl font-bold mb-6"
                     >
-                        Professional Mobile Repairs
+                        Professional Mobile &amp; Tablet Repairs
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
@@ -65,7 +65,7 @@ const Services = () => {
                         transition={{ delay: 0.1 }}
                         className="text-xl text-slate-300 max-w-2xl mx-auto mb-12"
                     >
-                        Fast, reliable, and affordable. We bring your devices back to life with genuine parts and expert care.
+                        Fast, reliable, and affordable. We bring your devices back to life with genuine parts and expert care — at Deanside, VIC 3336.
                     </motion.p>
 
                     {/* Benefits Grid */}
@@ -78,7 +78,7 @@ const Services = () => {
                                 transition={{ delay: 0.2 + (idx * 0.1) }}
                                 className="bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10 hover:bg-white/10 transition-colors"
                             >
-                                <div className="text-blue-400 mb-3 flex justify-center">{b.icon}</div>
+                                <div className="text-[#b88746] mb-3 flex justify-center">{b.icon}</div>
                                 <h3 className="font-bold text-lg mb-1">{b.title}</h3>
                                 <p className="text-sm text-slate-400">{b.desc}</p>
                             </motion.div>
@@ -94,11 +94,11 @@ const Services = () => {
                         <span className="text-primary font-bold tracking-wider uppercase">Transparent Pricing</span>
                         <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mt-2">Our Services</h2>
                         <p className="text-slate-500 mt-4 max-w-2xl mx-auto">
-                            Comprehensive repair solutions for all your device needs.
+                            Comprehensive repair solutions for phones and tablets of all brands. No fix, no fee.
                         </p>
                     </div>
 
-                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
                         {serviceList.map((service, idx) => (
                             <motion.div
                                 key={service.id}
@@ -132,7 +132,7 @@ const Services = () => {
                     <div className="max-w-4xl mx-auto">
                         <div className="text-center mb-12">
                             <h2 className="text-3xl font-bold text-slate-900">Ready to Fix Your Device?</h2>
-                            <p className="text-slate-500 mt-4">Book an appointment online and save time.</p>
+                            <p className="text-slate-500 mt-4">Book an appointment online and we'll get it sorted fast.</p>
                         </div>
                         <BookingForm />
                     </div>

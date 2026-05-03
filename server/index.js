@@ -1,3 +1,6 @@
+import dns from 'dns';
+dns.setServers(['8.8.8.8', '8.8.4.4']); // Force Google DNS — fixes SRV lookup for MongoDB Atlas
+
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';

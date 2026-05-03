@@ -5,9 +5,9 @@ import { formatOpeningHours } from '../utils/formatters';
 
 const Contact = () => {
     const [contact, setContact] = useState({
-        address: 'Loading...',
-        phone: 'Loading...',
-        email: 'Loading...'
+        address: 'Deanside VIC 3336',
+        phone: '0431305009',
+        email: 'instafixmobilerepair@gmail.com'
     });
 
     useEffect(() => {
@@ -22,7 +22,8 @@ const Contact = () => {
         <div className="bg-slate-50 min-h-screen py-12">
             <div className="container mx-auto px-6">
                 <div className="max-w-4xl mx-auto">
-                    <h1 className="text-3xl font-bold text-slate-900 mb-8 text-center">Contact Us</h1>
+                    <h1 className="text-3xl font-bold text-slate-900 mb-2 text-center">Contact Instafix Mobile Repairs</h1>
+                    <p className="text-center text-slate-500 mb-8">Deanside, Melton VIC 3336 &mdash; Mon&ndash;Sat: 7am–7pm</p>
 
                     <div className="grid md:grid-cols-2 gap-8">
                         {/* Contact Info */}
@@ -31,7 +32,7 @@ const Contact = () => {
                             <div className="space-y-6">
                                 {/* Visit Us */}
                                 <a
-                                    href="https://www.google.com/maps/search/?api=1&query=JEKA+MOBILE+AND+REPAIR+SHOP+SYDNEY"
+                                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(contact.address)}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="flex items-start gap-4 group cursor-pointer"
@@ -80,9 +81,8 @@ const Contact = () => {
                                     </div>
                                     <div>
                                         <h3 className="font-semibold text-slate-900">Opening Hours</h3>
-                                        <div className="text-slate-500 text-sm space-y-1 mt-1">
-                                            {formatOpeningHours(contact.openingHours)}
-                                        </div>
+                                        <p className="text-green-600 font-bold text-lg mt-1">Mon – Sat: 7:00 AM – 7:00 PM</p>
+                                        <p className="text-slate-500 text-sm">Sunday: By appointment only</p>
                                     </div>
                                 </div>
                             </div>
