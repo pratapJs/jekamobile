@@ -11,7 +11,7 @@ const ServiceGrid = () => {
         { icon: <Droplets size={40} />, title: "Water Damage Repair", desc: "Expert cleaning and diagnostic for liquid damaged phones and tablets.", link: "/services" },
         { icon: <Plug size={40} />, title: "Charging Port Repair", desc: "Device not charging? We fix loose or broken ports quickly.", link: "/services" },
         { icon: <Camera size={40} />, title: "Camera Repair", desc: "Blurry photos or broken lens? We restore your camera to full clarity.", link: "/services" },
-        { icon: <Truck size={40} />, title: "Home Pickup & Delivery", desc: "We come to you! Book a pickup, we fix your device & deliver it back — good as new.", link: "/contact" },
+        { icon: <Truck size={40} />, title: "Local Area Home Pickup & Delivery", desc: "We come to you! Book a pickup, we fix your device & deliver it back — good as new.", link: "/contact" },
     ];
 
     return (
@@ -21,7 +21,7 @@ const ServiceGrid = () => {
                     <span className="text-[#b88746] font-bold tracking-wider uppercase text-sm">What We Fix</span>
                     <h2 className="text-3xl font-bold text-white mt-2 mb-4">Expert Repair Services</h2>
                     <p className="text-slate-300 max-w-2xl mx-auto">
-                        We specialise in fixing phones and tablets of all brands. Fast, affordable, and backed by our quality guarantee. <strong className="text-[#fdf5a6]">Home pickup &amp; delivery available.</strong>
+                        We specialise in fixing phones and tablets of all brands. Fast, affordable, and backed by our quality guarantee. <strong className="text-[#fdf5a6]">Local area home pickup &amp; delivery available.</strong>
                     </p>
                 </div>
 

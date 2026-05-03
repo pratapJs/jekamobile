@@ -220,7 +220,7 @@ const Home = () => {
                             <div>
                                 <h2 className="text-3xl font-bold text-white mb-4">Visit Our Shop</h2>
                                 <p className="text-slate-400 text-lg">
-                                    Conveniently located in <strong className="text-white">Deanside VIC 3336</strong>. Come visit us Monday to Saturday, 7am–7pm. Home pickup &amp; delivery also available.
+                                    Conveniently located in <strong className="text-white">Deanside VIC 3336</strong>. Come visit us Monday to Saturday, 7am–7pm. Local area home pickup &amp; delivery also available.
                                 </p>
                             </div>
 

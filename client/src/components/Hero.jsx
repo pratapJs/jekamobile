@@ -14,7 +14,7 @@ const Hero = () => {
             image: "/shop-cover.jpg",
             title: "INSTAFIX",
             highlight: "MOBILE REPAIRS",
-            subtitle: "Your device, fixed instantly. Expert repairs for all phones & tablets — screen, battery, charging port and more. Home pickup & delivery available!",
+            subtitle: "Your device, fixed instantly. Expert repairs for all phones & tablets — screen, battery, charging port and more. Local area home pickup & delivery available!",
             ctaText: "Book a Repair",
             ctaLink: "#book-appointment",
             colorData: "from-[#b88746] to-[#fdf5a6]"

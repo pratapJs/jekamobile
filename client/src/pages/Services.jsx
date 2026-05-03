@@ -41,8 +41,8 @@ const Services = () => {
 
     const benefits = [
         { icon: <Award size={32} />, title: "Expert Technicians", desc: "Skilled, experienced repair specialists." },
-        { icon: <Shield size={32} />, title: "3 Months Warranty", desc: "Peace of mind on every repair." },
-        { icon: <Clock size={32} />, title: "Mon–Sat 7am–7pm", desc: "Sun by appointment. Home pickup & delivery available." },
+        { icon: <Shield size={32} />, title: "Warranty Service", desc: "Peace of mind on every repair." },
+        { icon: <Clock size={32} />, title: "Mon–Sat 7am–7pm", desc: "Sun by appointment. Local area home pickup & delivery available." },
         { icon: <DollarSign size={32} />, title: "Competitive Prices", desc: "Best value for premium service." },
     ];
 

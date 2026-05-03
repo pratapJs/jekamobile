@@ -86,7 +86,7 @@ const Footer = () => {
                             </li>
                         </ul>
                         <div className="mt-5 bg-[#b88746]/10 border border-[#b88746]/30 rounded-xl p-3 text-sm">
-                            <p className="text-[#fdf5a6] font-bold mb-1">🚗 Home Pickup &amp; Delivery</p>
+                            <p className="text-[#fdf5a6] font-bold mb-1">🚗 Local Area Home Pickup &amp; Delivery</p>
                             <p className="text-slate-400 text-xs">We come to you — book a pickup &amp; get your device back good as new!</p>
                         </div>
                         <div className="mt-3">
