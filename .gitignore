@@ -16,6 +16,8 @@ server/app.yaml
 # Build outputs
 /dist
 /build
+client/dist
+server/dist
 
 # Misc
 .DS_Store
